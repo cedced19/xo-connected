@@ -1,0 +1,62 @@
+.square{
+    position: relative;
+    width: 33%;
+    height:38%;
+    float: left;
+    border-bottom: 2px solid black;
+    border-right: 2px solid black;
+    border-left: 2px solid black;
+    border-top: 2px solid black;
+    text-align: center;
+    padding-top: 48.25px;
+    font-size: 75px;
+}
+
+#jumbotron-play{
+    height: 818px;
+    display: none;
+}
+#table-player{
+    display: none;
+}
+#playzone{
+    position: relative;
+    height: 579px;
+    cursor: pointer;
+}
+#error{
+    color: #e74c3c;
+    text-align: center;
+}
+#info{
+    color: #3498db;
+    text-align: center;
+}
+.table > thead > tr > th,
+.table > tbody > tr > th,
+.table > tfoot > tr > th,
+.table > thead > tr > td,
+.table > tbody > tr > td,
+.table > tfoot > tr > td {
+  padding: 8px;
+  line-height: 1.42857143;
+  vertical-align: top;
+  border-top: 1px solid #ddd;
+}
+.table-bordered > thead > tr > th, .table-bordered > tbody > tr > th, .table-bordered > tfoot > tr > th, .table-bordered > thead > tr > td, .table-bordered > tbody > tr > td, .table-bordered > tfoot > tr > td {
+border: 1px solid #ddd;
+}
+.btn-primary {
+  color: #fff;
+  background-color: #428bca;
+  border-color: #357ebd;
+}
+.btn-primary:hover,
+.btn-primary:focus,
+.btn-primary:active,
+.btn-primary.active,
+.open > .dropdown-toggle.btn-primary {
+  color: #fff;
+  background-color: #3071a9;
+  border-color: #285e8e;
+}

@@ -1,0 +1,33 @@
+{
+  "name": "xo-connected",
+  "version": "0.0.0",
+  "description": "xo-connected",
+  "main": "server.js",
+  "dependencies": {
+    "colors": "^1.1.2",
+    "hapi": "^8.8.0",
+    "socket.io": "^1.0.6"
+  },
+  "devDependencies": {
+    "grunt": "~0.4.1",
+    "grunt-contrib-uglify": "~0.5.0",
+    "matchdep": "~0.3.0",
+    "grunt-contrib-cssmin": "^0.10.0",
+    "grunt-contrib-copy": "~0.5.0",
+    "grunt-usemin": "^2.2.0",
+    "grunt-contrib-htmlmin": "^0.3.0",
+    "grunt-contrib-concat": "^0.5.0",
+    "grunt-uncss": "^0.3.6"
+  },
+  "author": {
+    "name": "Cédric",
+    "email": "cedced19@gmail.com",
+    "url": "https://github.com/cedced19"
+  },
+  "licenses": [
+    {
+      "type": "MIT",
+      "url": "http://cedced19.github.io/license/"
+    }
+  ]
+}
