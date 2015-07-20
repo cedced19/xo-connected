@@ -1,0 +1,44 @@
+.square {
+    position: relative;
+    width: 33%;
+    height: 33.333%;
+    float: left;
+    border-bottom: 2px solid black;
+    border-right: 2px solid black;
+    border-left: 2px solid black;
+    border-top: 2px solid black;
+    text-align: center;
+    display: flex;
+    justify-content: center;
+    align-content: center;
+    flex-direction: column;
+    font-size: 75px;
+}
+#jumbotron-play {
+    height: 850px;
+    display: none;
+}
+#table-player {
+    display: none;
+}
+#playzone {
+    position: relative;
+    height: 100%;
+    cursor: pointer;
+}
+#error {
+    color: #e74c3c;
+    text-align: center;
+}
+#info {
+    color: #3498db;
+    text-align: center;
+}
+@media (max-width: 435px) {
+    #jumbotron-play{
+        height: 425px;
+    }
+    .square {
+      font-size: 50px;
+    }
+}
