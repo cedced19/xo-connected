@@ -57,8 +57,10 @@ var io = require('socket.io').listen(app.listener),
 io.sockets.on('connection', function(socket){
     var me = false;
 
-    for (var k in users){
-            socket.emit('newusr', users[k]);
+    for (var i in users) {
+          if (users.hasOwnProperty(i)) {
+                socket.emit('newusr', users[i]);
+          }
     }
 
     connections++;
@@ -88,8 +90,12 @@ io.sockets.on('connection', function(socket){
             io.sockets.connected[game.playertwo.id].emit('game-accepted', game);
     });
 
+    socket.on('already-playing', function(player){
+            io.sockets.connected[player.id].emit('already-playing');
+    });
+
     socket.on('game-click', function(game){
-            io.sockets.connected[game.oppenent.id].emit('game-click', game.sq);
+            io.sockets.connected[game.opponent.id].emit('game-click', game.sq);
             io.sockets.connected[game.sender.id].emit('game-click', game.sq);
     });
 

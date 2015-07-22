@@ -1,7 +1,6 @@
 {
   "name": "xo-connected",
-  "version": "0.0.1",
-  "description": "xo-connected",
+  "version": "0.0.2",
   "main": "xo.js",
   "dependencies": {
     "check-update": "0.0.8",
@@ -21,6 +20,7 @@
   "bin": {
     "xo": "xo.js"
   },
+  "description": "A Tic Tac Toe in multiplayer with Node.js and Socket.io.",
   "devDependencies": {
     "gulp": "^3.8.10",
     "gulp-autoprefixer": "^2.3.1",

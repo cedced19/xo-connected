@@ -44,6 +44,7 @@
         $('#jumbotron-login').remove();
     });
 
+    // Add new users
     socket.on('newusr', function(user) {
         if (user.name !== currentusr.name) {
             var item = $('<tr>').attr('id', user.id);
@@ -72,49 +73,63 @@
     });
 
     //Invitation
-    socket.on('game-asked', function(oppenent) {
-        var accept = $('<button>').text('Accept').addClass('btn btn-accept').attr('id', oppenent.id + '-accept').attr('type', 'button');
-        accept.appendTo('#' + oppenent.id + '-acceptcontainer');
+    socket.on('game-asked', function(opponent) {
+        var accept = $('<button>').text('Accept').addClass('btn btn-accept').attr('id', opponent.id + '-accept').attr('type', 'button');
+        accept.appendTo('#' + opponent.id + '-acceptcontainer');
 
         accept.click(function() {
             if (currentusr.ongame) {
                 messages.displayError('You are on game!');
             } else {
-                $('#' + oppenent.id + '-accept').remove();
+                $('#' + opponent.id + '-accept').remove();
                 socket.emit('game-accepted', {
-                    playerone: oppenent,
+                    playerone: opponent,
                     playertwo: currentusr
                 });
             }
         });
     });
 
-
+    // Start party
     socket.on('game-accepted', function(game) {
-        messages.noneError();
-        $('#jumbotron-play').css('display', 'block');
-        currentusr.ongame = true;
-        // Set starter
-        if (currentusr.id == game.playerone.id) {
-            currentusr.mark = game.playerone.mark;
-            currentopponent = game.playertwo;
+        if (currentusr.ongame) {
+            if (currentusr.id == game.playerone.id) {
+                socket.emit('already-playing', game.playertwo);
+            } else {
+                socket.emit('already-playing', game.playerone);
+            }
         } else {
-            currentusr.mark = game.playertwo.mark;
-            currentopponent = game.playerone;
-        }
-        if (currentusr.mark == xo) {
-            messages.displayInfo("It's your turn and you have 'X'.");
-        } else {
-            messages.displayInfo("It's not your turn and you have 'O'.");
+            messages.noneError();
+            $('#jumbotron-play').css('display', 'block');
+            currentusr.ongame = true;
+            // Set starter
+            if (currentusr.id == game.playerone.id) {
+                currentusr.mark = game.playerone.mark;
+                currentopponent = game.playertwo;
+            } else {
+                currentusr.mark = game.playertwo.mark;
+                currentopponent = game.playerone;
+            }
+            if (currentusr.mark == xo) {
+                messages.displayInfo('It\'s your turn and you have \'X\'.');
+            } else {
+                messages.displayInfo('It\'s not your turn and you have \'O\'.');
+            }
         }
     });
 
+    // Don't start party
+    socket.on('already-playing', function() {
+        messages.displayError('Your opponent is already playing!');
+        messages.noneInfo();
+        reset();
+    });
 
     // Disconnection
     socket.on('disusr', function(user) {
         $('#' + user.id).remove();
         if (user.id == currentopponent.id) {
-            messages.displayError('Your oppenent has left.');
+            messages.displayError('Your opponent has left.');
             messages.noneInfo();
             reset();
         }
@@ -129,6 +144,7 @@
         }
     });
 
+    // Display changes
     socket.on('game-click', function(sq) {
         sq = $('#sq-' + sq);
         if (xo == 'x') {
@@ -141,10 +157,10 @@
             sq.css('color', '#f1c40f');
         }
         if (currentusr.mark == xo) {
-            messages.displayInfo("It's your turn and you have '" + currentusr.mark.toUpperCase() + "'.");
+            messages.displayInfo('It\'s your turn and you have \'' + currentusr.mark.toUpperCase() + '\'.');
             messages.noneError();
         } else {
-            messages.displayInfo("It's not your turn.");
+            messages.displayInfo('It\'s not your turn.');
         }
         if (checkWin('O')) {
             if (currentusr.mark == 'o') {
@@ -166,17 +182,16 @@
             messages.displayInfo('There are no winner.');
             reset();
         }
-
     });
 
     var mark = function(sq) {
         if (currentusr.mark !== xo) {
-            messages.displayError("It's not your turn.");
+            messages.displayError('It\'s not your turn.');
         } else {
             if ($('#sq-' + sq).text() === '') {
                 socket.emit('game-click', {
                     sq: sq,
-                    oppenent: currentopponent,
+                    opponent: currentopponent,
                     sender: currentusr
                 });
                 messages.noneError();
@@ -246,7 +261,9 @@
         $('#playzone > *').text('');
         $('#' + currentopponent.id + '-accept').remove();
         $('#' + currentopponent.id + '-ask').css('display', 'block');
-        currentopponent = '';
+        currentopponent = {
+            id: false
+        };
         currentusr.ongame = false;
         $('#jumbotron-play').css('display', 'none');
         xo = 'x';
@@ -259,7 +276,7 @@
         return false;
     };
 
-    var egg = new Egg("x,o", function() {
+    new Egg("x,o", function() {
       $('.egg').fadeIn(500, function() {
         setTimeout(function() { $('.egg').hide(); }, 5000);
       });

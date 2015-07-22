@@ -5,7 +5,7 @@ A morpion game with Node.js and Socket.io.
 [![Dependencies](https://david-dm.org/cedced19/xo-connected.png)](https://david-dm.org/cedced19/xo-connected)
 [![devDependencies](https://david-dm.org/cedced19/xo-connected/dev-status.png)](https://david-dm.org/cedced19/xo-connected#info=devDependencies)
 
-![Demo](demo.png)
+![Demo](https://raw.githubusercontent.com/cedced19/xo-connected/master/demo.png)
 
 ## CLI
 ```bash
