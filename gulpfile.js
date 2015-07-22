@@ -14,6 +14,12 @@ gulp.task('copy', function() {
         .pipe(gulp.dest('dist'));
 });
 
+gulp.task('copy-img', function() {
+    gulp.src('vendor/img/**.*')
+        .pipe(gulp.dest('dist/vendor/img'));
+});
+
+
 gulp.task('html', function () {
     var assets = useref.assets();
 
@@ -40,4 +46,4 @@ gulp.task('css', ['html'], function () {
         .pipe(gulp.dest('dist/vendor/css'));
 });
 
-gulp.task('default', ['css', 'copy']);
+gulp.task('default', ['css', 'copy', 'copy-img']);

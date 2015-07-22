@@ -137,8 +137,8 @@
             sq.css('color', '#27ae60');
         } else {
             sq.text('O');
-            sq.css('color', '#f1c40f');
             xo = 'x';
+            sq.css('color', '#f1c40f');
         }
         if (currentusr.mark == xo) {
             messages.displayInfo("It's your turn and you have '" + currentusr.mark.toUpperCase() + "'.");
@@ -259,4 +259,9 @@
         return false;
     };
 
+    var egg = new Egg("x,o", function() {
+      $('.egg').fadeIn(500, function() {
+        setTimeout(function() { $('.egg').hide(); }, 5000);
+      });
+    }).listen();
 })(jQuery);
