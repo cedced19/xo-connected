@@ -7,15 +7,17 @@ var gulp = require('gulp'),
     concat = require('gulp-concat'),
     uncss = require('gulp-uncss'),
     minifyCss = require('gulp-minify-css'),
-    htmlmin = require('gulp-htmlmin');
+    htmlmin = require('gulp-htmlmin'),
+    gif = require('imagemin-gifsicle');
 
 gulp.task('copy', function() {
     gulp.src(['favicon.ico', 'xo.js', 'package.json', 'README.md'])
         .pipe(gulp.dest('dist'));
 });
 
-gulp.task('copy-img', function() {
-    gulp.src('vendor/img/**.*')
+gulp.task('copy-gif', function() {
+    gulp.src('vendor/img/*.gif')
+        .pipe(gif({interlaced: true})())
         .pipe(gulp.dest('dist/vendor/img'));
 });
 
@@ -46,4 +48,4 @@ gulp.task('css', ['html'], function () {
         .pipe(gulp.dest('dist/vendor/css'));
 });
 
-gulp.task('default', ['css', 'copy', 'copy-img']);
+gulp.task('default', ['css', 'copy', 'copy-gif']);
