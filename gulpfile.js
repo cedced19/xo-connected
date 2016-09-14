@@ -8,7 +8,7 @@ var gulp = require('gulp'),
     uncss = require('gulp-uncss'),
     minifyCss = require('gulp-minify-css'),
     htmlmin = require('gulp-htmlmin'),
-    gif = require('imagemin-gifsicle');
+    imagemin = require('gulp-imagemin');
 
 gulp.task('copy', function() {
     gulp.src(['favicon.ico', 'xo.js', 'package.json', 'README.md'])
@@ -17,19 +17,16 @@ gulp.task('copy', function() {
 
 gulp.task('copy-gif', function() {
     gulp.src('vendor/img/*.gif')
-        .pipe(gif({interlaced: true})())
+        .pipe(imagemin())
         .pipe(gulp.dest('dist/vendor/img'));
 });
 
 
 gulp.task('html', function () {
-    var assets = useref.assets();
 
     return gulp.src(['index.html'])
-        .pipe(assets)
-        .pipe(gulpif('*.js', uglify()))
-        .pipe(assets.restore())
         .pipe(useref())
+        .pipe(gulpif('*.js', uglify()))
         .pipe(gulpif('*.html', htmlmin({collapseWhitespace: true})))
         .pipe(gulp.dest('dist'));
 });

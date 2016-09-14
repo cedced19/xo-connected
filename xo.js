@@ -12,6 +12,12 @@ program
   .option('-p, --port [number]', 'specified the port')
   .parse(process.argv);
 
+app.register(require('inert'), (err) => {
+    if (err) {
+       console.error('Failed to load plugin:', err);
+    }
+});
+
 app.connection({ port: port });
 
 app.route({
@@ -66,15 +72,15 @@ io.sockets.on('connection', function(socket){
     connections++;
     io.sockets.emit('numusr', connections);
 
-    socket.on('login', function(user){
-       me = user;
+    socket.on('login', function(user) {
+       me = { name : user.name, id: socket.id };
        socket.emit('logged', socket.id);
        users[socket.id] = me;
        io.sockets.emit('newusr', me);
     });
 
     socket.on('invite', function(dest){
-        io.sockets.connected[dest.id].emit('game-asked', me);
+      io.sockets.connected[dest.id].emit('game-asked', me);
     });
 
     socket.on('game-accepted', function(game){
